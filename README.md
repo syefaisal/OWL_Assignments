@@ -3,7 +3,6 @@
 A recreation of the OWL Fund Intelligence dashboard: a React + TypeScript frontend
 that renders mock data served by a small Python (FastAPI) backend.
 
-![dashboard](image.png)
 
 ## Stack
 
