@@ -7,8 +7,9 @@ that renders mock data served by a small Python (FastAPI) backend.
 ## Stack
 
 - **Frontend:** React 18 + TypeScript, [Vite](https://vitejs.dev/) for tooling,
-  [Recharts](https://recharts.org/) for the line + donut charts. Plain CSS (no UI
-  framework) to keep the styling close to the reference and dependency-light.
+  [D3](https://d3js.org/) (`d3-scale` + `d3-shape`) for the line + donut charts,
+  rendered as React-controlled SVG. Plain CSS (no UI framework) to keep the styling
+  close to the reference and dependency-light.
 - **Backend:** FastAPI + uvicorn serving static mock JSON over a small REST API.
 
 ## Project layout
@@ -22,6 +23,7 @@ frontend/
     api/client.ts    # typed fetch wrapper around the API
     types.ts         # shared TS types (mirror the API response shapes)
     components/       # Header, StatsRow, PerformanceChart, AllocationChart, AlertsPanel
+                      # useMeasure.ts — ResizeObserver hook for responsive chart sizing
     App.tsx          # composes the layout, fetches each section
     styles.css
 ```
@@ -72,8 +74,12 @@ CORS/host config to manage in dev.
   or failed section doesn't block the others.
 - **Icons are inline SVG** (`components/icons.tsx`) rather than an icon library — a
   handful of small Feather-style glyphs isn't worth a dependency.
-- **Chart animation is disabled** on the Recharts series for deterministic,
-  flicker-free first paint (it also makes headless screenshotting reliable).
+- **Charts are hand-rolled with D3** (`d3-scale` for axes, `d3-shape` for the
+  `curveMonotoneX` line and donut `arc`/`pie`), but React owns the DOM — D3 only
+  computes geometry and React renders the SVG. A small `useMeasure` ResizeObserver
+  hook supplies the container width so charts stay fluid (replacing what Recharts'
+  `ResponsiveContainer` did). There's no enter/transition animation, which keeps the
+  first paint deterministic and headless screenshotting reliable.
 
 ## What I'd do next
 
