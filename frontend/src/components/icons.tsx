@@ -82,17 +82,6 @@ export function BellIcon(props: IconProps) {
   );
 }
 
-export function OwlIcon(props: IconProps) {
-  return (
-    <svg {...base} width={24} height={24} {...props}>
-      <circle cx="9" cy="9" r="2.5" />
-      <circle cx="15" cy="9" r="2.5" />
-      <path d="M4 8a8 8 0 0 1 16 0v5a8 8 0 0 1-16 0z" />
-      <path d="M9 16c1 1 2 1.2 3 1.2S14 17 15 16" />
-    </svg>
-  );
-}
-
 const STAT_ICONS = {
   activity: ActivityIcon,
   dollar: DollarIcon,
